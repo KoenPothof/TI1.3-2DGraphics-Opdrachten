@@ -38,13 +38,9 @@ public class Spiral extends Application {
             double x2 =  i*Math.cos(i + resolution);
             double y2 =  i*Math.sin(i + resolution);
             graphics.draw(new Line2D.Double(x1*scale, y1*scale, x2*scale, y2*scale));
-
         }
-
     }
-    
-    
-    
+
     public static void main(String[] args) {
         launch(Spiral.class);
     }
