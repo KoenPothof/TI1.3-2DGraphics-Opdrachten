@@ -27,7 +27,6 @@ public class Spiral extends Application {
         graphics.scale( 1, -1);
 
         graphics.setColor(Color.black);
-
         double resolution = 0.01;
         double scale = 10.0;
 
