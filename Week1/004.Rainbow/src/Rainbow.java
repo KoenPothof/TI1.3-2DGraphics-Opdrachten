@@ -17,7 +17,7 @@ public class Rainbow extends Application {
         primaryStage.setTitle("Rainbow");
         primaryStage.show();
     }
-    
+
     public void draw(FXGraphics2D graphics) {
         graphics.translate(canvas.getWidth()/2, canvas.getHeight()/2);
         graphics.scale( 1, -1);
