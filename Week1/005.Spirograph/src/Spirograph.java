@@ -19,25 +19,37 @@ public class Spirograph extends Application {
     
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Canvas canvas = new Canvas(1920, 1080);
-       
-        VBox mainBox = new VBox();
-        HBox topBar = new HBox();
-        mainBox.getChildren().add(topBar);
-        mainBox.getChildren().add(new Group(canvas));
-        
-        topBar.getChildren().add(v1 = new TextField("300"));
-        topBar.getChildren().add(v2 = new TextField("1"));
-        topBar.getChildren().add(v3 = new TextField("300"));
-        topBar.getChildren().add(v4 = new TextField("10"));
-                
-        v1.textProperty().addListener(e -> draw(new FXGraphics2D(canvas.getGraphicsContext2D())));
-        v2.textProperty().addListener(e -> draw(new FXGraphics2D(canvas.getGraphicsContext2D())));
-        v3.textProperty().addListener(e -> draw(new FXGraphics2D(canvas.getGraphicsContext2D())));
-        v4.textProperty().addListener(e -> draw(new FXGraphics2D(canvas.getGraphicsContext2D())));
-        
-        draw(new FXGraphics2D(canvas.getGraphicsContext2D()));
-        primaryStage.setScene(new Scene(mainBox));
+        VBox vBox = new VBox();
+        HBox hBox = new HBox();
+        vBox.getChildren().add(hBox);
+        vBox.getChildren().add(new Group(canvas));
+        Button button= new Button("Spinala");
+        Button clearButton= new Button("Clear");
+
+        hBox.getChildren().add(v1 = new TextField("300"));
+        hBox.getChildren().add(v2 = new TextField("1"));
+        hBox.getChildren().add(v3 = new TextField("300"));
+        hBox.getChildren().add(v4 = new TextField("10"));
+        hBox.getChildren().add(button);
+        hBox.getChildren().add(clearButton);
+
+        canvas.getGraphicsContext2D().translate(canvas.getWidth()/2, canvas.getHeight()/2);
+        canvas.getGraphicsContext2D().scale(1,-1);
+
+        button.setOnAction(event -> {
+            if(buttonState){
+                new Alert(Alert.AlertType.NONE, "Clear before *Spinala*", ButtonType.OK).show();
+            }else {
+                draw(new FXGraphics2D(canvas.getGraphicsContext2D()));
+                buttonState = true;
+            }});
+
+        clearButton.setOnAction(event -> {
+            canvas.getGraphicsContext2D().clearRect(-5000, -5000 , 10000, 10000);
+            buttonState = false;
+        });
+
+        primaryStage.setScene(new Scene(vBox));
         primaryStage.setTitle("Spirograph");
         primaryStage.show();
     }
