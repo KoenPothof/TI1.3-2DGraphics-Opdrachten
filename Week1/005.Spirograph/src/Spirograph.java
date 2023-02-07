@@ -2,7 +2,6 @@ import java.awt.*;
 import java.awt.geom.*;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
-import static javax.swing.text.StyleConstants.getBackground;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -64,7 +63,7 @@ public class Spirograph extends Application {
     
     public void draw(FXGraphics2D graphics) {
         double resolution = 0.0001;
-        double scale = 0.7;
+        double scale = 0.5;
 
         float x =0;
         float y =0;

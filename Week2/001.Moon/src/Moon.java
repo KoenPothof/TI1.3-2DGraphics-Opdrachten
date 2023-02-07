@@ -33,6 +33,20 @@ public class Moon extends Application {
         graphics.setTransform(new AffineTransform());
         graphics.setBackground(Color.white);
         graphics.clearRect(0, 0, (int) canvas.getWidth(), (int) canvas.getHeight());
+
+
+        GeneralPath path = new GeneralPath();
+        path.moveTo(0, 0);
+        path.curveTo( 280, 0, 370, 300, 0, 350);
+        path.closePath();
+
+        Ellipse2D shape = new Ellipse2D.Double( 40, 45, 300, 300);
+        graphics.setColor(Color.BLACK);
+        graphics.draw(shape);
+        graphics.fill(shape);
+        graphics.setColor(Color.WHITE);
+        graphics.draw(path);
+        graphics.fill(path);
     }
 
 
