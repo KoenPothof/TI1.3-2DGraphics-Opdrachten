@@ -33,6 +33,35 @@ public class YingYang extends Application {
         graphics.setTransform(new AffineTransform());
         graphics.setBackground(Color.white);
         graphics.clearRect(0, 0, (int) canvas.getWidth(), (int) canvas.getHeight());
+
+        Rectangle2D rec = new Rectangle2D.Double(0, 0, 250, 500);
+
+        Ellipse2D shape = new Ellipse2D.Double( 0, 0, 500, 500);
+        Ellipse2D shape2 = new Ellipse2D.Double( 125, 0, 250, 250);
+        Ellipse2D shape3 = new Ellipse2D.Double( 125, 250, 250, 250);
+        Ellipse2D shape4 = new Ellipse2D.Double( 223, 113, 50, 50);
+        Ellipse2D shape5 = new Ellipse2D.Double( 223, 363, 50, 50);
+
+        graphics.setColor(Color.BLACK);
+        graphics.draw(shape);
+        graphics.fill(shape);
+        graphics.setColor(Color.WHITE);
+        graphics.draw(rec);
+        graphics.fill(rec);
+        graphics.setColor(Color.WHITE);
+        graphics.draw(shape2);
+        graphics.fill(shape2);
+        graphics.setColor(Color.BLACK);
+        graphics.draw(shape3);
+        graphics.fill(shape3);
+        graphics.setColor(Color.BLACK);
+        graphics.draw(shape);
+        graphics.setColor(Color.BLACK);
+        graphics.draw(shape4);
+        graphics.fill(shape4);
+        graphics.setColor(Color.WHITE);
+        graphics.draw(shape5);
+        graphics.fill(shape5);
     }
 
 
