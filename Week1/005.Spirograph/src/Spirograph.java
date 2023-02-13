@@ -48,7 +48,7 @@ public class Spirograph extends Application {
             }else {
                 draw(new FXGraphics2D(canvas.getGraphicsContext2D()));
                 buttonState = true;
-            }});
+        }});
 
         clearButton.setOnAction(event -> {
             canvas.getGraphicsContext2D().clearRect(-5000, -5000 , 10000, 10000);
