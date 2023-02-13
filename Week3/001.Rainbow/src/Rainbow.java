@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.font.GlyphVector;
 import java.awt.geom.*;
 
 import javafx.application.Application;
@@ -28,13 +29,29 @@ public class Rainbow extends Application {
     }
 
 
-    public void draw(FXGraphics2D graphics)
-    {
+    public void draw(FXGraphics2D graphics) {
         graphics.setTransform(new AffineTransform());
         graphics.setBackground(Color.white);
         graphics.clearRect(0, 0, (int) canvas.getWidth(), (int) canvas.getHeight());
-    }
+        Font font = graphics.getFont();
 
+        char[] chars = "RegenBoog".toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            GlyphVector vec = font.createGlyphVector(graphics.getFontRenderContext(), Character.toString(chars[i]));
+            AffineTransform transformation = new AffineTransform();
+            transformation.scale(10, 10);
+            transformation.rotate((-0.5 * Math.PI) + (Math.PI / (chars.length - 1) * i));
+            Rectangle2D bounds = vec.getLogicalBounds();
+            transformation.translate(-bounds.getWidth() / 2, -(bounds.getHeight() / 2) - 7);
+
+            Shape oneletter = transformation.createTransformedShape(vec.getOutline());
+            oneletter = AffineTransform.getTranslateInstance(canvas.getWidth() / 2, canvas.getHeight() / 2).createTransformedShape(oneletter);
+
+            graphics.setColor(Color.getHSBColor((1f / chars.length) * i, 1, 1));
+            graphics.fill(oneletter);
+            graphics.draw(oneletter);
+        }
+    }
 
     public static void main(String[] args)
     {
