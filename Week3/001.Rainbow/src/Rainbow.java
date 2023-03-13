@@ -35,14 +35,14 @@ public class Rainbow extends Application {
         graphics.clearRect(0, 0, (int) canvas.getWidth(), (int) canvas.getHeight());
         Font font = graphics.getFont();
 
-        char[] chars = "RegenBoog".toCharArray();
+        char[] chars = "Rainbow".toCharArray();
         for (int i = 0; i < chars.length; i++) {
             GlyphVector vec = font.createGlyphVector(graphics.getFontRenderContext(), Character.toString(chars[i]));
             AffineTransform transformation = new AffineTransform();
-            transformation.scale(10, 10);
+            transformation.scale(7, 7);
             transformation.rotate((-0.5 * Math.PI) + (Math.PI / (chars.length - 1) * i));
             Rectangle2D bounds = vec.getLogicalBounds();
-            transformation.translate(-bounds.getWidth() / 2, -(bounds.getHeight() / 2) - 7);
+            transformation.translate(-(bounds.getWidth() / 2), -(bounds.getHeight() / 2)-11);
 
             Shape oneletter = transformation.createTransformedShape(vec.getOutline());
             oneletter = AffineTransform.getTranslateInstance(canvas.getWidth() / 2, canvas.getHeight() / 2).createTransformedShape(oneletter);
