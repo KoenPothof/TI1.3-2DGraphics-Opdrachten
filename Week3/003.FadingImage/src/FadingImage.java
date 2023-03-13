@@ -66,7 +66,7 @@ public class FadingImage extends Application {
             graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, blend2));
             graphics.drawImage(image1, 0, 0, 1000, 1000, null);
     }
-    
+
     private void update(double deltaTime) {
         blend1 += blending;
         blend2 -= blending;
