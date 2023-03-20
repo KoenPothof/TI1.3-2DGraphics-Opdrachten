@@ -8,7 +8,7 @@ public class PositionConstraint implements Constraint {
 
     public PositionConstraint(Particle particle) {
         this.particle = particle;
-        if (particle != null) {
+        if (this.particle != null) {
             fixedPosition = particle.getPosition();
         }
     }
@@ -25,6 +25,10 @@ public class PositionConstraint implements Constraint {
 
     }
 
+    public Particle getParticle() {
+        return particle;
+    }
+
     public void setParticle(Particle particle) {
         this.particle = particle;
         if (particle != null) {
@@ -35,4 +39,9 @@ public class PositionConstraint implements Constraint {
     public void setFixedPosition(Point2D fixedPosition) {
         this.fixedPosition = fixedPosition;
     }
+
+    public Point2D getPosition() {
+        return fixedPosition;
+    }
+
 }
