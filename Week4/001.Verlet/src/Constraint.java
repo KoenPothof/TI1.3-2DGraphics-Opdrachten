@@ -1,6 +1,8 @@
 import org.jfree.fx.FXGraphics2D;
 
+import java.awt.*;
+
 public interface Constraint {
-    void satisfy();
-    void draw(FXGraphics2D g2d);
+    void update();
+    void draw( FXGraphics2D graphics);
 }

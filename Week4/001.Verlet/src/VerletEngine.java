@@ -20,8 +20,7 @@ public class VerletEngine extends Application {
     private ResizableCanvas canvas;
     private ArrayList<Particle> particles = new ArrayList<>();
     private ArrayList<Constraint> constraints = new ArrayList<>();
-    private PositionConstraint mouseConstraint = new PositionConstraint(null);
-
+    private FixedPositionConstraint mouseConstraint = new FixedPositionConstraint(null);
     @Override
     public void start(Stage stage) throws Exception {
         BorderPane mainPane = new BorderPane();
@@ -63,7 +62,7 @@ public class VerletEngine extends Application {
             constraints.add(new DistanceConstraint(particles.get(i), particles.get(i + 1)));
         }
 
-        constraints.add(new PositionConstraint(particles.get(10)));
+        constraints.add(new FixedPositionConstraint(particles.get(10)));
         constraints.add(mouseConstraint);
     }
 
@@ -72,22 +71,21 @@ public class VerletEngine extends Application {
         graphics.setBackground(Color.white);
         graphics.clearRect(0, 0, (int) canvas.getWidth(), (int) canvas.getHeight());
 
-        for (Constraint c : constraints) {
-            c.draw(graphics);
+        for (Particle particle : particles) {
+            particle.draw(graphics);
+        }
+        for (Constraint constraint : constraints) {
+            constraint.draw(graphics);
         }
 
-        for (Particle p : particles) {
-            p.draw(graphics);
-        }
     }
 
     private void update(double deltaTime) {
-        for (Particle p : particles) {
-            p.update((int) canvas.getWidth(), (int) canvas.getHeight());
+        for (Particle particle : particles) {
+            particle.update(canvas.getWidth(), canvas.getHeight());
         }
-
-        for (Constraint c : constraints) {
-            c.satisfy();
+        for (Constraint constraint : constraints) {
+            constraint.update();
         }
     }
 
@@ -95,14 +93,15 @@ public class VerletEngine extends Application {
         Point2D mousePosition = new Point2D.Double(e.getX(), e.getY());
         Particle nearest = getNearest(mousePosition);
         Particle newParticle = new Particle(mousePosition);
-        particles.add(newParticle);
-        constraints.add(new DistanceConstraint(newParticle, nearest));
 
+        if (e.getButton() == MouseButton.PRIMARY) {
+            particles.add(newParticle);
+            constraints.add(new DistanceConstraint(newParticle, nearest));
+        }
         if (e.getButton() == MouseButton.SECONDARY) {
             ArrayList<Particle> sorted = new ArrayList<>();
             sorted.addAll(particles);
 
-            //sorteer alle elementen op afstand tot de muiscursor. De toegevoegde particle staat op 0, de nearest op 1, en de derde op 2
             Collections.sort(sorted, new Comparator<Particle>() {
                 @Override
                 public int compare(Particle o1, Particle o2) {
@@ -110,12 +109,21 @@ public class VerletEngine extends Application {
                 }
             });
 
-            constraints.add(new DistanceConstraint(newParticle, sorted.get(2)));
+            if (e.isControlDown()){
+                particles.add(newParticle);
+                constraints.add(new DistanceConstraint(newParticle, nearest, 100));
+                constraints.add(new DistanceConstraint(newParticle, sorted.get(1), 100));
+            } else if (e.isShiftDown()) {
+                constraints.add(new DistanceConstraint(nearest, sorted.get(1)));
+            } else {
+                particles.add(newParticle);
+                constraints.add(new DistanceConstraint(newParticle, nearest));
+                constraints.add(new DistanceConstraint(newParticle, sorted.get(2)));
+            }
         } else if (e.getButton() == MouseButton.MIDDLE) {
-            // Reset
-            particles.clear();
-            constraints.clear();
-            init();
+            Particle particle = new Particle(mousePosition);
+            constraints.add(new FixedPositionConstraint(particle));
+            particles.add(particle);
         }
     }
 
@@ -142,7 +150,7 @@ public class VerletEngine extends Application {
     }
 
     private void mouseDragged(MouseEvent e) {
-        mouseConstraint.setFixedPosition(new Point2D.Double(e.getX(), e.getY()));
+        mouseConstraint.setPosition(new Point2D.Double(e.getX(), e.getY()));
     }
 
     public static void main(String[] args) {
